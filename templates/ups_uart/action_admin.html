@@ -1,0 +1,57 @@
+
+
+ <!-- action usual -->
+ [#if DATA_SOURCE="ups_uart_settings" || DATA_SOURCE=""#]
+ <!-- table ups_uart_settings search -->
+ [#if VIEW_MODE="search_ups_uart_settings" || VIEW_MODE=""#]
+  [#inc ups_uart_settings_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart_settings search -->
+ <!-- table ups_uart_settings edit -->
+ [#if VIEW_MODE="edit_ups_uart_settings"#]
+   [#if ID!=""#]
+   [#if TITLE!=""#]<h4>[#TITLE#]</h4>[#endif TITLE#]
+<ul class="nav nav-tabs">
+  <li[#if TAB=""#] class="active"[#endif#]>
+   <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab="><#LANG_GENERAL#></a>
+  </li>
+  <li[#if TAB="data"#] class="active"[#endif#]>
+   <a href="?data_source=<#DATA_SOURCE#>&view_mode=<#VIEW_MODE#>&id=<#ID#>&tab=data">&#060#LANG_DATA#&#062</a>
+  </li>
+</ul>
+&nbsp;<br/>
+   [#endif ID#]
+   [#if TAB=""#]
+    [#inc ups_uart_settings_edit_default.html#]
+   [#endif TAB#]
+   [#if TAB="data"#]
+    [#inc ups_uart_settings_edit_data.html#]
+   [#endif TAB#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart_settings edit -->
+ <!-- table ups_uart_settings view --> 
+ [#if VIEW_MODE="view_ups_uart_settings"#]
+   [#if TAB=""#]
+    [#inc ups_uart_settings_view_default.html#]
+   [#endif TAB#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart_settings view -->
+ [#endif DATA_SOURCE#]
+ <!-- action usual -->
+ [#if DATA_SOURCE="ups_uart"#]
+ <!-- table ups_uart search -->
+ [#if VIEW_MODE="search_ups_uart" || VIEW_MODE=""#]
+  [#inc ups_uart_search_admin.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart search -->
+ <!-- table ups_uart edit -->
+ [#if VIEW_MODE="edit_ups_uart"#]
+   [#inc ups_uart_edit.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart edit -->
+ <!-- table ups_uart view --> 
+ [#if VIEW_MODE="view_ups_uart"#]
+   [#inc ups_uart_view.html#]
+ [#endif VIEW_MODE#]
+ <!-- / table ups_uart view -->
+ [#endif DATA_SOURCE#]
