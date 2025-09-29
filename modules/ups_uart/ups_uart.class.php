@@ -12,6 +12,7 @@ class ups_uart extends module {
     const LIST = [
         'Вход','Выход','Напряжение батареи','Нагрузка','Частота','Батарея','Температура','Флаги'
     ];
+    public int $lastMinute = -1;
     
     /**
     * ups_uart
@@ -149,7 +150,6 @@ class ups_uart extends module {
                     $sql = "INSERT INTO ups_uart (ID, TITLE, VALUE, device_id, UPDATED) 
                             VALUES (".(int)$k.", '$title', '$value', 1, '$updated')
                                 ON DUPLICATE KEY UPDATE 
-                                TITLE=VALUES(TITLE),
                                 VALUE=VALUES(VALUE),
                                 UPDATED=VALUES(UPDATED)";
                     SQLExec($sql);
@@ -157,6 +157,14 @@ class ups_uart extends module {
                     $rec = SQLSelectOne("SELECT * FROM ups_uart WHERE ID=".(int)$k." AND device_id=1");
                     if(!empty($rec['LINKED_OBJECT']) && !empty($rec['LINKED_PROPERTY'])){
                         sg($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_PROPERTY'], $v);
+                    }
+                    
+                    if(!empty($rec['LINKED_OBJECT']) && !empty($rec['LINKED_METHOD'])){
+                        $currentMinute = (int)date('i');
+                        
+                        if($currentMinute !== $this->lastMinute){
+                            sg($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD']);
+                        }
                     }
                 }
             }
