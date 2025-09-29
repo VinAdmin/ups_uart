@@ -163,7 +163,8 @@ class ups_uart extends module {
                         $currentMinute = (int)date('i');
                         
                         if($currentMinute !== $this->lastMinute){
-                            sg($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD']);
+                            $this->lastMinute = $currentMinute;
+                            callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD']);
                         }
                     }
                 }
