@@ -12,7 +12,7 @@ class ups_uart extends module {
     const LIST = [
         'Вход','Выход','Напряжение батареи','Нагрузка','Частота','Батарея','Температура','Флаги'
     ];
-    public int $lastMinute = -1;
+    public array $lastMinute = [];
     
     /**
     * ups_uart
@@ -161,10 +161,15 @@ class ups_uart extends module {
                     
                     if(!empty($rec['LINKED_OBJECT']) && !empty($rec['LINKED_METHOD'])){
                         $currentMinute = (int)date('i');
+                        $arrMethod = $rec['LINKED_OBJECT'] . '_' . $rec['LINKED_METHOD'];
                         
-                        if($currentMinute !== $this->lastMinute){
-                            $this->lastMinute = $currentMinute;
+                        if(!isset($this->lastMinute[$arrMethod])){
+                            $this->lastMinute[$arrMethod] = -1;
+                        }
+                        
+                        if($currentMinute !== $this->lastMinute[$arrMethod]){
                             callMethod($rec['LINKED_OBJECT'] . '.' . $rec['LINKED_METHOD']);
+                            $this->lastMinute[$arrMethod] = $currentMinute;
                         }
                     }
                 }
